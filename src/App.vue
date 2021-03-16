@@ -91,6 +91,7 @@
       :closeRes="closeRes"
     />
     <Result :visible.sync="showResult"></Result>
+    <List :visible.sync="showList"></List>
 
     <span class="copy-right">
       Copyright©zhangyongfeng5350@gmail.com
@@ -126,11 +127,13 @@ import {
 } from '@/helper/index';
 import { luckydrawHandler } from '@/helper/algorithm';
 import Result from '@/components/Result';
+import List from '@/components/List';
 import { database, DB_STORE_NAME } from '@/helper/db';
+import Konami from 'konami';
 export default {
   name: 'App',
 
-  components: { LotteryConfig, Publicity, Tool, Result },
+  components: { LotteryConfig, Publicity, Tool, Result, List },
 
   computed: {
     resCardStyle() {
@@ -228,6 +231,7 @@ export default {
       showRes: false,
       showConfig: false,
       showResult: false,
+      showList: false,
       resArr: [],
       category: '',
       audioPlaying: false,
@@ -250,6 +254,7 @@ export default {
       this.getPhoto();
     }, 1000);
     window.addEventListener('resize', this.reportWindowSize);
+    new Konami(this.showListAct);
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.reportWindowSize);
@@ -261,6 +266,9 @@ export default {
         AppCanvas.parentElement.removeChild(AppCanvas);
       }
       this.startTagCanvas();
+    },
+    showListAct() {
+      this.showList = true;
     },
     playHandler() {
       this.audioPlaying = true;
