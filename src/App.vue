@@ -347,11 +347,14 @@ export default {
         } else if (mode === 99) {
           num = qty;
         }
-        const resArr = luckydrawHandler(
-          number,
-          allin ? [] : this.allresult,
-          num
-        );
+        let withblock = this.allresult;
+        let blocked = this.list
+          .filter(item => item.block)
+          .map(item => item.key);
+        if (category === 'firstPrize') {
+          withblock = withblock.concat(blocked);
+        }
+        const resArr = luckydrawHandler(number, allin ? [] : withblock, num);
         this.resArr = resArr;
 
         this.category = category;

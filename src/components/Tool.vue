@@ -308,7 +308,8 @@ export default {
             key &&
               list.push({
                 key,
-                name
+                name,
+                block: false
               });
           }
         });
